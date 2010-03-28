@@ -1,6 +1,0 @@
-(def-binary-rw hli-packet
-	((start-byte-2 u1)
-	 (length u2)
-	 (packet-type u1)
-	 (payload ())
-	 (checksum u1)))

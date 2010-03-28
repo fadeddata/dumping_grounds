@@ -1,4 +1,0 @@
-(load-file "hli-callback.clj")
-(load-file "binary-structure.clj")
-(load-file "hli-parse.clj")
-(load-file "hli-serial-test.clj")

@@ -1,4 +1,0 @@
-(import '(org.jfree.chart ChartFactory
-			  ChartFrame
-			  JFreeChart)
-	'(org.jfree.data.general DefaultPieDataset))
