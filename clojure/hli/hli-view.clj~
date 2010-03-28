@@ -1,0 +1,7 @@
+(in-ns 'hli-view)
+(clojure/refer 'clojure)
+
+(def *charts* (ref {}))
+
+(def add-chart [chart chart-id]
+     (dosync (commute *charts* assoc id (conj (@*charts* chart-id) chart)))

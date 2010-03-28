@@ -1,0 +1,51 @@
+(in-ns 'hli-serial-test)
+(clojure/refer 'clojure)
+(clojure/refer 'hli-parse)
+
+(defn random-packet []
+  (let [random (new Random)
+	packet-start-1 85
+	packet-start-2 245
+	payload-size 2
+	box-id 0
+	sensor-id (. random nextInt 4)
+	packet-type 0
+	value-1 (. random nextInt 255)
+	value-2 (. random nextInt 255)
+	checksum (checksum (list payload-size box-id sensor-id packet-type value-1 value-2))]
+    (list packet-start-1
+	  packet-start-2
+	  payload-size
+	  box-id
+	  sensor-id
+	  packet-type
+	  value-1
+	  value-2
+	  checksum)))
+
+(def serial-stream 
+  (let [c (ref (cycle 
+		(concat (random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet)
+			(random-packet))))] 
+     (proxy [java.io.InputStream] [] 
+         (read [] 
+           (dosync 
+            (let [ret (first @c)] 
+              (alter c rest) 
+              (int ret)))))))

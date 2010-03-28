@@ -1,0 +1,49 @@
+(import '(javax.swing JFrame JPanel)
+	'(org.jfree.chart ChartFactory
+			  ChartFrame
+			  JFreeChart)
+	'(org.jfree.data.general DefaultValueDataset
+				       ValueDataset)
+	'(java.awt BorderLayout
+		   Color
+		   Dimension
+		   Font
+		   GradientPaint
+		   Point)
+	'(org.jfree.chart.plot.dial DialPointer$Pin))
+
+(defn create-dial-chart
+  [lower-bound upper-bound start-angle extent major-tick-increment minor-tick-count chart-title
+   dataset-value]
+  (let [plot (new DialPlot)
+	chart (new JFreeChart chart-title plot)
+	dataset (new DefaultValueDataset dataset-value)
+	dvi (new DialValueIndicator 0)
+	scale (new StandardDialScale lower-bound upper-bound start-angle extent major-tick-increment minor-tick-count)
+	cap (new DialCap)]
+
+    (doto scale
+      (setMajorTickIncrement 10)
+      (setMinorTickCount 4)
+      (setTickRadius 0.88)
+      (setTickLabelOffset 0.15)
+      (setTickLabelFont (new Font "Dialog" (. Font PLAIN) 14)))
+    
+    (doto plot
+      (setDataset dataset)
+      (setDialFrame (new StandardDialFrame))
+      (setBackground (new DialBackground))
+      (addLayer dvi)
+      (addScale 0 scale)
+      (addPointer (new DialPointer$Pin))
+      (setCap cap))
+    chart))
+
+(def frame (new ChartFrame "blah" (create-dial-chart -40 60 120 300 10 4 "blah" 10)))
+
+(doto frame
+  (pack)
+  (setVisible true))
+
+
+

@@ -1,0 +1,21 @@
+// ==========================================================================
+// Test.AppController
+// ==========================================================================
+
+require('core');
+
+/** @class
+
+  (Document Your View Here)
+
+  @extends SC.Object
+  @author AuthorName
+  @version 0.1
+  @static
+*/
+Test.appController = SC.Object.create(
+/** @scope Test.appController */ {
+
+  // TODO: Add your own code here.
+
+}) ;
